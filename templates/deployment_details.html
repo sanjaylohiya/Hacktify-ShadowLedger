@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deployment Details - ShadowLedger</title>
+</head>
+<body>
+    <h1>ShadowLedger — Deployment Details</h1>
+
+    <h2>{{ deployment_id }}</h2>
+
+    <p><strong>Service:</strong> {{ deployment.service }}</p>
+    <p><strong>Status:</strong> {{ deployment.status }}</p>
+
+    {% if deployment_id == "DEP-209" %}
+        <h3>Review Notice</h3>
+        <p>
+            Ledger Sync deployment is awaiting review.
+            The operations team must verify its approval
+            before the next audit.
+        </p>
+    {% endif %}
+
+    {% if review %}
+        <h3>Deployment Approval</h3>
+
+        {% if review.approved %}
+            <p><strong>Review Status:</strong> Approved</p>
+        {% else %}
+            <p><strong>Review Status:</strong> Pending Review</p>
+
+            <form action="/deployments/{{ deployment_id }}/review" method="POST">
+                <label for="reviewer">Reviewer:</label>
+                <input
+                    type="text"
+                    id="reviewer"
+                    name="reviewer"
+                    placeholder="Enter reviewer name"
+                    required
+                >
+                <button type="submit">Submit Review</button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <p><a href="/deployments">Back to Deployment Tracker</a></p>
+</body>
+</html>

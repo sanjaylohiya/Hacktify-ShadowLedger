@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Directory - ShadowLedger</title>
+</head>
+<body>
+    <h1>ShadowLedger — Staff Directory</h1>
+    <p>Internal staff records</p>
+<form action="/staff" method="GET">
+    <label for="q">Search staff:</label>
+    <input type="text" id="q" name="q" placeholder="Enter staff name or ID">
+    <button type="submit">Search</button>
+</form>
+
+{% if query %}
+    <p>Search query: {{ query }}</p>
+{% endif %}
+    
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Staff ID</th>
+        <th>Name</th>
+        <th>Department</th>
+    </tr>
+
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.department }}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="3">No staff records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+    <p><a href="/assets">Back to Assets</a></p>
+</body>
+</html>

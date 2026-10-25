@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Backup Details - ShadowLedger</title>
+</head>
+<body>
+    <h1>ShadowLedger — Backup Details</h1>
+
+    <h2>{{ backup_id }}</h2>
+
+    <p><strong>System:</strong> {{ backup.system }}</p>
+    <p><strong>Status:</strong> {{ backup.status }}</p>
+
+    {% if backup.deployment_id %}
+        <h3>Related Deployment</h3>
+        <p>
+            This backup is associated with deployment
+            <a href="/deployments/{{ backup.deployment_id }}">
+                {{ backup.deployment_id }}
+            </a>.
+        </p>
+        <p>
+            Backup approval is pending deployment review.
+        </p>
+    {% endif %}
+{% if backup_id == "BK-204" %}
+    <h3>Ledger Archive Approval</h3>
+    <p>
+        This archive requires approval of deployment DEP-209
+        before it can be released.
+    </p>
+
+    <form action="/backups/BK-204/approve" method="POST">
+    <label for="approver">Archive Approver:</label>
+    <input
+        type="text"
+        id="approver"
+        name="approver"
+        placeholder="Enter archive approver"
+        required
+    >
+    <button type="submit">Approve Ledger Archive</button>
+</form>
+{% endif %}
+
+{% if backup_id == "BK-204" %}
+    <h3>Released Archive</h3>
+    <p>After completing the required approvals, open the archive.</p>
+    <p>
+        <a href="/backups/BK-204/archive">
+            View Released Archive
+        </a>
+    </p>
+{% endif %}
+
+    <p><a href="/backups">Back to Backup Registry</a></p>
+</body>
+</html>
